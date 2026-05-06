@@ -81,8 +81,8 @@ function formatTime(dateString) {
 }
 
 const flightRows = [];
-for (let i=0; i<flights.length; i++) {
-  const flight = flights[i];
+for (let index=0; index<flights.length; index++) {
+  const flight = flights[index];
 
   flightRows.push(
     <tr key={flight._id}>
