@@ -4,7 +4,7 @@ export default function Home() {
       <h1>Dair Flat Airways</h1>
       <p>Welcome to Dairy Flat Airways booking system</p>
       <nav>
-        <a href="/flights">Browse & Booke Flights</a>
+        <a href="/flights">Browse & Book Flights</a>
       </nav>
     </div>
   );

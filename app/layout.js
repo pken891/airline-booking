@@ -1,4 +1,5 @@
 import './globals.css';
+import Link from 'next.link';
 
 export const metadata = {
   title: 'Dairy Flat Airyways',
@@ -10,11 +11,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <nav>
-          <a href="/">Home</a> | <a href="/flights">Flights</a>
+          <Link href="/">Home</Link> | <Link href="/flights">Flights</Link>
         </nav>
         <main>{children}</main>
         <footer>
-          <p> 2026 Dairy Falt Airways</p>
+          <p> 2026 Dairy Flat Airways</p>
         </footer>
       </body>
     </html>
