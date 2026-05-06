@@ -15,7 +15,7 @@ export default function Flights() {
 
   useEffect(function () {
     fetchFlights();
-  });
+  }, []);
 
   async function fetchFlights() {
     setLoading(true);
@@ -93,15 +93,15 @@ for (let index=0; index<flights.length; index++) {
       <td style={tdStyle}>{flight.flightNumber}</td>
       <td style={tdStyle}>{flight.origin}</td>
       <td style={tdStyle}>{flight.destination}</td>
-      <td style={tdStyle}>{formatDate(flight.departDateTime)}</td>
-      <td style={tdStyle}>{formatTime(flight.departDateTime)}</td>
-      <td style={tdStyle}>{formatTime(flight.arriveDateTime)}</td>
+      <td style={tdStyle}>{formatDate(flight.departureDateTime)}</td>
+      <td style={tdStyle}>{formatTime(flight.departureDateTime)}</td>
+      <td style={tdStyle}>{formatTime(flight.arrivalDateTime)}</td>
       <td style={tdStyle}>{flight.aircraft}</td>
       <td style={tdStyle}>{flight.price}</td>
       <td style={tdStyle}>{flight.seatsAvailable}</td>
       <td style={tdStyle}>
         {
-          flights.seatsAvailable > 0 
+          flight.seatsAvailable > 0 
           ? <Link href={'/booking?flightID=' + flight._id}>Book</Link>
           : <span>Full</span>
         }
@@ -120,7 +120,7 @@ return (
         Origin:
         <select value={origin} onChange={handleOriginChange}>
           <option value="">All</option>
-          <option value="Dairy Flat">Dair Flat</option>
+          <option value="Dairy Flat">Dairy Flat</option>
           <option value="Sydney">Sydney</option>
           <option value="Rotorua">Rotorua</option>
           <option value="Great Barrier Island">Great Barrier Island</option>
@@ -136,7 +136,7 @@ return (
         Destination:
         <select value={destination} onChange={handleDestinationChange}>
           <option value="">All</option>
-          <option value="Dairy Flat">Dair Flat</option>
+          <option value="Dairy Flat">Dairy Flat</option>
           <option value="Sydney">Sydney</option>
           <option value="Rotorua">Rotorua</option>
           <option value="Great Barrier Island">Great Barrier Island</option>
