@@ -1,8 +1,8 @@
 export default function Booking() {
   return (
     <div>
-      <h1>Welcome to Booking page</h1>
-      <p>Site is live!</p>
+      <h1>Book a Flight</h1>
+      <p>Booking form will go here</p>
     </div>
   );
 }
