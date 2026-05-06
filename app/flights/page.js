@@ -6,12 +6,16 @@ import Link from 'next/link';
 export default function Flights() {
   const [flights, setFlights] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(error);
+  const [error, setError] = useState(null);
 
   //filter state
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [date, setDate] = useState('');
+
+  useEffect(function () {
+    fetchFlights();
+  });
 
   async function fetchFlights() {
     setLoading(true);
@@ -72,7 +76,7 @@ function formatDate(dateString) {
 }
 
 function formatTime(dateString) {
-  const dateObj = new Date(dateStr);
+  const dateObj = new Date(dateString);
   return dateObj.toLocaleTimeString('en-NZ', {
     hour: '2-digit',
     minute: '2-digit',
@@ -146,7 +150,7 @@ return (
 
       <label>
         Date:
-        <input type="data" value={date} onChange={handleDateChange} />
+        <input type="date" value={date} onChange={handleDateChange} />
       </label>
 
       <br />
@@ -160,7 +164,7 @@ return (
     {error && <p style={{color: 'red'}}>{error}</p>}
     {!loading && !error && flights.length === 0 && (<p>No Flights Found.</p>)}
     {!loading && !error && flights.length > 0 && (<table border="1" cellPadding="8" style={{borderCollapse: 'collapse'}}>
-      <thread>
+      <thead>
         <tr>
           <th>Flight</th>
           <th>From</th>
@@ -168,11 +172,12 @@ return (
           <th>Date</th>
           <th>Departs</th>
           <th>Arrives</th>
+          <th>Aircraft</th>
           <th>Price</th>
           <th>Seats</th>
           <th>Book</th>
         </tr>
-      </thread>
+      </thead>
 
       <tbody>
         {flightRows}
