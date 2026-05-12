@@ -51,7 +51,7 @@ export async function DELETE(_req, {params}) {
 
         await bookingsCol.deleteOne({ bookingReference: bookingId });
         await db.collection("flights").updateOne(
-            { _id: booking.flightId },
+            { _id: new ObjectId(booking.flightId) },
             { $inc: { seatsAvailable: seatsToFree } }
         );
 

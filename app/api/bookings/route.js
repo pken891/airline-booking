@@ -32,7 +32,7 @@ export async function POST(request) {
       return Response.json({ error: 'No seats available on this flight' }, { status: 400 });
     }
 
-    // Generate unique booking reference
+    // Generate booking reference
     let bookingReference;
     let isUnique = false;
     while (!isUnique) {
@@ -45,7 +45,7 @@ export async function POST(request) {
     const booking = {
       bookingReference,
       flightId: flight._id,
-      flightNumber: flight.flightNumber,
+      flightNumber: flight.flightNum,
       passengerName,
       passengerEmail,
       origin: flight.origin,
