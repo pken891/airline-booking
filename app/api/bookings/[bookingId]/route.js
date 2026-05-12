@@ -10,7 +10,7 @@ export async function GET(_req, {params}) {
 
         //find the schdedule containing boooking
         const schedule = await schedulesCol.findOne({
-            "booking.bookingId": bookingId
+            "bookings.bookingId": bookingId
         });
 
         if (!schedule) {
@@ -44,7 +44,7 @@ export async function DELETE(_req, {params}) {
         const schedulesCol = db.collection("schedules");
 
         //find schedule conatining booking
-        const schedule = await schedulesCol.findONe({"bookings.bookingId": bookingId});
+        const schedule = await schedulesCol.findOne({"bookings.bookingId": bookingId});
 
         if (!schedule) {
             return NextResponse.json({error: "Booking not found"}, {status: 404});
@@ -65,7 +65,7 @@ export async function DELETE(_req, {params}) {
         return NextResponse.json({message: "Booking cancelled", bookingId}, {status: 200});
 
     } catch (e) {
-        console.error("GET booking error:", e);
+        console.error("GET deletion error:", e);
         return NextResponse.json({error: "Internal Server Error"}, {status: 500});
     }
 }
