@@ -30,7 +30,7 @@ export default async function BookingConfirmation({ params }) {
 
             <div className="border p-4 rounded-md bg-gray-50">
                 <h2 className="text-xl font-semibold mb-2">Booking Reference</h2>
-                <p className="text-lg font-semibold mb-2">{booking_.id}</p>
+                <p className="text-lg font-semibold mb-2">{booking.id}</p>
             </div>
 
             <div className="mt-6">
@@ -46,7 +46,7 @@ export default async function BookingConfirmation({ params }) {
                 <p><strong>Destination:</strong>{flight.destination}</p>
                 <p><strong>Departure:</strong>{new Date(flight.departureTime).toLocaleString()}</p>
                 <p><strong>Arrival:</strong>{new Date(flight.arrivalTime).toLocaleString()}</p>
-                <p><strong>Aircraft:</strong>{flight.aircraft}</p>
+                <p><strong>Aircraft:</strong>{flight.aircraftType}</p>
             </div>
 
             <div className="mt-6 border-t pt-4">
