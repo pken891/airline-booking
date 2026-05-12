@@ -1,11 +1,10 @@
-import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
+import {getDb} from "@/lib/mongodb";
 
 export async function GET(request, {params}) {
     try {
         const { id } = await params;
-        const client = await clientPromise;
-        const db = client.db('airline-booking');
+        const db = await getDb();;
 
         const flight = await db.collection('flights').findOne({_id: new ObjectId(id)});
         if (!flight) {

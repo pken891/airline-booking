@@ -1,9 +1,8 @@
-import clientPromise from "@/lib/mongodb";
+import {getDb} from "@/lib/mongodb";
 
 export async function GET(request) {
     try {
-        const client = await clientPromise;
-        const db = client.db('airline-booking');
+        const db = await getDb();
         const { searchParams } = new URL(request.url);
         const origin = searchParams.get('origin');
         const destination = searchParams.get('destination');
@@ -15,8 +14,8 @@ export async function GET(request) {
         if (destination) filter.destination = destination;
         if (date) {
             const startOfDay = new Date(date);
-            const endOfDay = new DataTransfer(date);
-            endOfDay.setData(endOfDay.getDate()+1);
+            const endOfDay = new Date(date);
+            endOfDay.setDate(endOfDay.getDate()+1);
             filter.departDateTime = {
                 $gte: startOfDay,
                 $lt: endOfDay,

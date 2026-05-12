@@ -1,4 +1,4 @@
-import clientPromise from '@/lib/mongodb';
+import { getDb } from "@/lib/mongodb";
 import { ObjectId } from 'mongodb';
 
 function generateBookingRef() {
@@ -19,8 +19,7 @@ export async function POST(request) {
       return Response.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    const client = await clientPromise;
-    const db = client.db('airline-booking');
+    const db = await getDb();
 
     // Find the flight
     const flight = await db.collection('flights').findOne({ _id: new ObjectId(flightId) });
