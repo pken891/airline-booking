@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Booking() {
   const [flight, setFlight] = useState(null);
@@ -19,6 +20,7 @@ export default function Booking() {
     const flightId = params.get('flightId');
 
     if (!flightId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setError('No flight selected.');
       setLoading(false);
       return;
@@ -221,7 +223,7 @@ export default function Booking() {
           {submitting ? 'Booking...' : 'Confirm Booking'}
         </button>
 
-        <a href="/flights">Cancel</a>
+        <Link href="/flights">Cancel</Link>
       </form>
     </div>
   );

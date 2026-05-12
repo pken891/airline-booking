@@ -1,4 +1,4 @@
-import { getDb } from "@/lib/mongodb";
+import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
 function generateBookingRef() {
@@ -21,7 +21,7 @@ export async function POST(request) {
 
     const db = await getDb();
 
-    // Find the flight
+    // Find flight
     const flight = await db.collection('flights').findOne({ _id: new ObjectId(flightId) });
 
     if (!flight) {
