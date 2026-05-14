@@ -11,7 +11,7 @@ const routes = [
         destination: 'Sydney',
         aircraft: 'SyberJet',
         departTime: '10:00',
-        arriveTime: '14:30',
+        arriveTime: '13:30',
         daysOfWeek: [5], //friday
         price: 499.00,
         seats: 8
@@ -22,8 +22,8 @@ const routes = [
         origin: 'Sydney',
         destination: 'Dairy Flat',
         aircraft: 'SyberJet',
-        departTime: '10:00',
-        arriveTime: '14:30',
+        departTime: '14:00',
+        arriveTime: '19:30',
         daysOfWeek: [0], //sunday
         price: 499.00,
         seats: 8
@@ -39,7 +39,7 @@ const routes = [
         arriveTime: '08:15',
         daysOfWeek: [1,2,3,4,5], //mon-fri
         price: 189.00,
-        seats: 6
+        seats: 4
     },
     {
         code: 'FA201',
@@ -50,7 +50,7 @@ const routes = [
         arriveTime: '10:00',
         daysOfWeek: [1,2,3,4,5], //mon-fri
         price: 189.00,
-        seats: 6
+        seats: 4
     },
     //rotorua shuttle, afternoon, cirrus jet 1
     {
@@ -62,7 +62,7 @@ const routes = [
         arriveTime: '17:15',
         daysOfWeek: [1,2,3,4,5], //mon-fri
         price: 189.00,
-        seats: 6
+        seats: 4
     },
     {
         code: 'FA203',
@@ -73,7 +73,7 @@ const routes = [
         arriveTime: '19:15',
         daysOfWeek: [1,2,3,4,5], //mon-fri
         price: 189.00,
-        seats: 6
+        seats: 4
     },
 
     //great barrier island, cirrus jet 2
@@ -86,7 +86,7 @@ const routes = [
         arriveTime: '09:45',
         daysOfWeek: [1,3,5], //mon,wed,fri
         price: 159.00,
-        seats: 6
+        seats: 4
     },
     {
         code: 'FA301',
@@ -97,7 +97,7 @@ const routes = [
         arriveTime: '09:45',
         daysOfWeek: [2,4,6], //tues,wed,thurs
         price: 159.00,
-        seats: 6
+        seats: 4
     },
 
     //chatham islands, HondaJet 1
@@ -110,7 +110,7 @@ const routes = [
         arriveTime: '11:30',
         daysOfWeek: [2,5], //tues,fri
         price: 349.00,
-        seats: 6
+        seats: 5
     },
     {
         code: 'FA401',
@@ -121,7 +121,7 @@ const routes = [
         arriveTime: '11:30',
         daysOfWeek: [3,6], //wed,sat
         price: 349.00,
-        seats: 6
+        seats: 5
     },
 
     //lake tekapo, HondaJet 2
@@ -134,7 +134,7 @@ const routes = [
         arriveTime: '11:00',
         daysOfWeek: [1], //mon
         price: 279.00,
-        seats: 6
+        seats: 5
     },
     {
         code: 'FA501',
@@ -145,7 +145,7 @@ const routes = [
         arriveTime: '11:00',
         daysOfWeek: [2], //tues
         price: 279.00,
-        seats: 6
+        seats: 5
     },
 ];
 
@@ -168,7 +168,7 @@ function generateFlights(routes, weeksAhead = 4) {
                 if (route.daysOfWeek.includes(dayOfWeek)){
 
                     const [departHour, departMin] = route.departTime.split(':').map(Number);
-                    const [arriveHour, arriveMin] = route.departTime.split(':').map(Number);
+                    const [arriveHour, arriveMin] = route.arriveTime.split(':').map(Number);
 
                     const departure = new Date(currDate);
                     departure.setHours(departHour,departMin,0,0);
@@ -221,7 +221,7 @@ async function seed() {
         console.log(`Inserted ${routes.length} routes across 4 weeks`);
         
         //put in flights
-        const flights = generateFlights(routes, 4);
+        const flights = generateFlights(routes, 8);
         await db.collection('flights').insertMany(flights);
         console.log(`Inserted ${flights.length} flights across 4 weeks`);
 
