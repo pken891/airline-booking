@@ -132,17 +132,17 @@ export default function Booking() {
     return (
       <div style={{ padding: '20px' }}>
         <p style={{ color: 'red' }}>{error}</p>
-        <a href="/flights">Back to Flights</a>
+        <Link href="/flights">Back to Flights</Link>
       </div>
     );
   }
 
   return (
     <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
-      <h1>Book a Flight</h1>
+      <h1 className="text-3xl font-bold text-[#0f7bbf] mb-6">Book a Flight</h1>
 
-      <div style={{ background: '#f0f4ff', padding: '16px', borderRadius: '8px', marginBottom: '24px' }}>
-        <h2 style={{ marginTop: 0 }}>Flight Details</h2>
+      <div className="border border-gray-300 rounded-lg p-6 mb-8">
+        <h2 className="text-xl font-semibold text-[#0f7bbf] mb-4">Flight Details</h2>
         <table cellPadding="6">
           <tbody>
             <tr>
@@ -195,7 +195,6 @@ export default function Booking() {
               value={passengerName}
               onChange={handleNameChange}
               placeholder="John Smith"
-              style={{ width: '100%', padding: '8px', marginTop: '4px' }}
             />
           </label>
         </div>
@@ -208,7 +207,6 @@ export default function Booking() {
               value={passengerEmail}
               onChange={handleEmailChange}
               placeholder="john@example.com"
-              style={{ width: '100%', padding: '8px', marginTop: '4px' }}
             />
           </label>
         </div>
@@ -218,7 +216,7 @@ export default function Booking() {
         <button
           type="submit"
           disabled={submitting}
-          style={{ padding: '10px 24px', marginRight: '12px' }}
+          className="bg-[#0a6aa8] text-white px-6 py-2 rounded-lg hover:bg-[#0a6aa8] disabled:opacity-50"
         >
           {submitting ? 'Booking...' : 'Confirm Booking'}
         </button>

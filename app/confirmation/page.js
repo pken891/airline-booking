@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function Confirmation() {
   const [booking, setBooking] = useState(null);
@@ -21,13 +22,11 @@ export default function Confirmation() {
       try {
         const response = await fetch('/api/bookings/' + ref);
         const data = await response.json();
-
         if (!response.ok) {
           setError('Booking not found.');
           setLoading(false);
           return;
         }
-
         setBooking(data);
         setLoading(false);
       } catch (e) {
@@ -40,124 +39,101 @@ export default function Confirmation() {
   }, []);
 
   function formatDate(dateString) {
-    const dateObj = new Date(dateString);
-    return dateObj.toLocaleDateString('en-NZ', {
+    return new Date(dateString).toLocaleDateString('en-NZ', {
       weekday: 'long',
       year: 'numeric',
-      month: 'long',
+      month: 'long', 
       day: 'numeric'
     });
   }
 
   function formatTime(dateString) {
-    const dateObj = new Date(dateString);
-    return dateObj.toLocaleTimeString('en-NZ', {
-      hour: '2-digit',
-      minute: '2-digit',
+    return new Date(dateString).toLocaleTimeString('en-NZ', {
+      hour: '2-digit', 
+      minute: '2-digit', 
       hour12: false
     });
   }
 
   function formatBookedAt(dateString) {
-    const dateObj = new Date(dateString);
-    return dateObj.toLocaleString('en-NZ', {
+    return new Date(dateString).toLocaleString('en-NZ', {
       year: 'numeric',
-      month: 'short',
+      month: 'short', 
       day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+      hour: '2-digit', 
+      minute: '2-digit', 
       hour12: false
     });
   }
 
-  if (loading) {
-    return <div style={{ padding: '20px' }}><p>Loading booking details...</p></div>;
-  }
+  if (loading) return <p className="text-gray-500">Loading booking details...</p>;
 
-  if (error) {
-    return (
-      <div style={{ padding: '20px' }}>
-        <p style={{ color: 'red' }}>{error}</p>
-        <a href="/flights">Back to Flights</a>
-      </div>
-    );
-  }
+  if (error) return (
+    <div>
+      <p className="text-red-500">{error}</p>
+      <Link href="/flights" className="text-[#6fc3df] underline">Back to Flights</Link>
+    </div>
+  );
 
   return (
-    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
+    <div className="max-w-2xl mx-auto">
 
-      <div style={{ background: '#e6ffe6', border: '2px solid green', padding: '16px', borderRadius: '8px', marginBottom: '24px', textAlign: 'center' }}>
-        <h1 style={{ color: 'green', marginTop: 0 }}>✅ Booking Confirmed!</h1>
-        <p style={{ fontSize: '24px', fontWeight: 'bold' }}>Booking Reference: {booking.bookingReference}</p>
-        <p>Please save this reference for your records.</p>
+      {/* Success banner */}
+      <div className="bg-green-50 border-2 border-green-500 rounded-lg p-6 mb-8 text-center">
+        <h1 className="text-2xl font-bold text-green-700 mb-2">✅ Booking Confirmed!</h1>
+        <p className="text-3xl font-bold text-green-800 mb-1">{booking.bookingReference}</p>
+        <p className="text-sm text-green-600">Please save this reference for your records.</p>
       </div>
 
-      <div style={{ border: '1px solid #ccc', padding: '16px', borderRadius: '8px', marginBottom: '16px' }}>
-        <h2 style={{ marginTop: 0 }}>Flight Details</h2>
-        <table cellPadding="8" style={{ width: '100%' }}>
+      {/* Flight details */}
+      <div className="border border-gray-200 rounded-lg p-6 mb-6 shadow-sm">
+        <h2 className="text-xl font-semibold text-[#6fc3df] mb-4">Flight Details</h2>
+        <table className="w-full text-sm">
           <tbody>
-            <tr>
-              <td><strong>Flight Number:</strong></td>
-              <td>{booking.flightNumber}</td>
-            </tr>
-            <tr>
-              <td><strong>From:</strong></td>
-              <td>{booking.origin}</td>
-            </tr>
-            <tr>
-              <td><strong>To:</strong></td>
-              <td>{booking.destination}</td>
-            </tr>
-            <tr>
-              <td><strong>Date:</strong></td>
-              <td>{formatDate(booking.departureDateTime)}</td>
-            </tr>
-            <tr>
-              <td><strong>Departs:</strong></td>
-              <td>{formatTime(booking.departureDateTime)}</td>
-            </tr>
-            <tr>
-              <td><strong>Arrives:</strong></td>
-              <td>{formatTime(booking.arrivalDateTime)}</td>
-            </tr>
-            <tr>
-              <td><strong>Aircraft:</strong></td>
-              <td>{booking.aircraft}</td>
-            </tr>
-            <tr>
-              <td><strong>Price:</strong></td>
-              <td>${booking.price}</td>
-            </tr>
+            {[
+              ['Flight Number', booking.flightNumber],
+              ['From', booking.origin],
+              ['To', booking.destination],
+              ['Date', formatDate(booking.departureDateTime)],
+              ['Departs', formatTime(booking.departureDateTime)],
+              ['Arrives', formatTime(booking.arrivalDateTime)],
+              ['Aircraft', booking.aircraft],
+              ['Price', `$${booking.price}`],
+            ].map(([label, value]) => (
+              <tr key={label} className="border-b border-gray-100 last:border-0">
+                <td className="py-2 pr-4 font-medium w-40 text-gray-600">{label}</td>
+                <td className="py-2">{value}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
-      <div style={{ border: '1px solid #ccc', padding: '16px', borderRadius: '8px', marginBottom: '16px' }}>
-        <h2 style={{ marginTop: 0 }}>Passenger Details</h2>
-        <table cellPadding="8" style={{ width: '100%' }}>
+      {/* Passenger details */}
+      <div className="border border-gray-200 rounded-lg p-6 mb-8 shadow-sm">
+        <h2 className="text-xl font-semibold text-[#6fc3df] mb-4">Passenger Details</h2>
+        <table className="w-full text-sm">
           <tbody>
-            <tr>
-              <td><strong>Name:</strong></td>
-              <td>{booking.passengerName}</td>
-            </tr>
-            <tr>
-              <td><strong>Email:</strong></td>
-              <td>{booking.passengerEmail}</td>
-            </tr>
-            <tr>
-              <td><strong>Booked At:</strong></td>
-              <td>{formatBookedAt(booking.bookedAt)}</td>
-            </tr>
+            {[
+              ['Name', booking.passengerName],
+              ['Email', booking.passengerEmail],
+              ['Booked At', formatBookedAt(booking.bookedAt)],
+            ].map(([label, value]) => (
+              <tr key={label} className="border-b border-gray-100 last:border-0">
+                <td className="py-2 pr-4 font-medium w-40 text-gray-600">{label}</td>
+                <td className="py-2">{value}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
-      <div style={{ display: 'flex', gap: '12px' }}>
-        <button onClick={function () { window.print(); }}>
-          Print / Save as PDF
+      <div className="flex gap-4 flex-wrap">
+        <button onClick={() => window.print()} className="bg-[#6fc3df] text-white px-6 py-2 rounded-lg hover:bg-[#0f7bbf] transition-colors"> Print / Save as PDF
         </button>
-        <a href="/flights">Book Another Flight</a>
-        <a href="/">Back to Home</a>
+        <Link href="/flights" className="border border-[#6fc3df] text-[#6fc3df] px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors"> Book Another Flight
+        </Link>
+        <Link href="/" className="border border-gray-300 text-gray-600 px-6 py-2 rounded-lg hover:bg-gray-50 transition-colors"> Back to Home </Link>
       </div>
     </div>
   );
